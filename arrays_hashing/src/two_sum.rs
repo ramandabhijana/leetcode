@@ -28,18 +28,22 @@
 struct Solution;
 impl Solution {
     pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
-        let result = Vec::new();
+        use std::collections::HashMap;
 
-        for (outer_index, &num) in nums.iter().enumerate() {
-            for inner_index in outer_index + 1..nums.len() {
-                let sum = num + nums[inner_index];
-                if sum == target {
-                    return [outer_index as i32, inner_index as i32].to_vec();
-                }
+        // it stores value that has been traversed in `nums``
+        let mut prev_map: HashMap<i32, usize> = HashMap::new();
+
+        for (index, &num) in nums.iter().enumerate() {
+            let diff = target - num;
+
+            if let Some(index_of_diff) = prev_map.get(&diff) {
+                return [*index_of_diff as i32, index as i32].to_vec();
             }
+
+            prev_map.insert(num, index);
         }
 
-        result
+        Vec::new()
     }
 }
 
