@@ -27,5 +27,44 @@
 
 struct Solution;
 impl Solution {
-    pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {}
+    pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
+        let result = Vec::new();
+
+        for (outer_index, &num) in nums.iter().enumerate() {
+            for inner_index in outer_index + 1..nums.len() {
+                let sum = num + nums[inner_index];
+                if sum == target {
+                    return [outer_index as i32, inner_index as i32].to_vec();
+                }
+            }
+        }
+
+        result
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::Solution;
+
+    #[test]
+    fn test_case_1() {
+        let nums: Vec<i32> = [2, 7, 11, 15].into();
+        let target = 9i32;
+        assert_eq!(Solution::two_sum(nums, target), [0, 1].to_vec());
+    }
+
+    #[test]
+    fn test_case_2() {
+        let nums: Vec<i32> = [3, 2, 4].into();
+        let target = 6i32;
+        assert_eq!(Solution::two_sum(nums, target), [1, 2].to_vec());
+    }
+
+    #[test]
+    fn test_case_3() {
+        let nums: Vec<i32> = [3, 3].into();
+        let target = 6i32;
+        assert_eq!(Solution::two_sum(nums, target), [0, 1].to_vec());
+    }
 }
