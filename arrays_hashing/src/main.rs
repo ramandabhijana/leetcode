@@ -1,5 +1,3 @@
 mod contains_duplicate;
 
-fn main() {
-    // 
-}
+fn main() {}
