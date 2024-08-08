@@ -17,7 +17,17 @@
 struct Solution;
 impl Solution {
     pub fn is_anagram(s: String, t: String) -> bool {
-        false
+        if s.len() != t.len() {
+            return false;
+        }
+
+        let mut s_chars: Vec<char> = s.chars().collect();
+        s_chars.sort_by(|lhs, rhs| lhs.cmp(rhs));
+
+        let mut t_chars: Vec<char> = t.chars().collect();
+        t_chars.sort_by(|lhs, rhs| lhs.cmp(rhs));
+
+        s_chars == t_chars
     }
 }
 
