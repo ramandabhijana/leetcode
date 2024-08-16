@@ -19,7 +19,26 @@
 struct Solution;
 impl Solution {
     pub fn top_k_frequent(nums: Vec<i32>, k: i32) -> Vec<i32> {
-        todo!()
+        use std::collections::HashMap;
+
+        if nums.len() == k as usize {
+            return nums;
+        }
+
+        let mut nums_count: HashMap<i32, i32> = HashMap::new();
+
+        for i in nums {
+            nums_count.entry(i).and_modify(|n| *n += 1).or_insert(1);
+        }
+
+        let mut sorted_by_occurence = Vec::from_iter(nums_count);
+        sorted_by_occurence.sort_by(|&lhs, &rhs| rhs.1.cmp(&lhs.1));
+
+        sorted_by_occurence
+            .into_iter()
+            .take(k as usize)
+            .map(|(k, _)| k)
+            .collect()
     }
 }
 
