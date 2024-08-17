@@ -22,7 +22,21 @@
 struct Solution;
 impl Solution {
     pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
-        todo!()
+        let mut result: Vec<i32> = Vec::new();
+
+        let mut prefix = 1i32;
+        for i in 0..nums.len() {
+            result.push(prefix);
+            prefix *= nums[i];
+        }
+
+        let mut postfix = 1i32;
+        for i in (0..nums.len()).rev() {
+            result[i] *= postfix;
+            postfix *= nums[i];
+        }
+
+        result
     }
 }
 
