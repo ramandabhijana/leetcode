@@ -43,7 +43,48 @@
 struct Solution;
 impl Solution {
     pub fn is_valid_sudoku(board: Vec<Vec<char>>) -> bool {
-        todo!()
+        use std::collections::HashMap;
+
+        let mut cols: HashMap<i32, Vec<char>> = HashMap::new();
+        let mut rows: HashMap<i32, Vec<char>> = HashMap::new();
+
+        let mut squares: HashMap<(i32, i32), Vec<char>> = HashMap::new();
+
+        // 9 by 9 board
+        for row in 0..9 {
+            for col in 0..9 {
+                // if the cell is not filled proceed to next column
+                let cell = board[row][col];
+                if cell == '.' {
+                    continue;
+                }
+
+                let col = col as i32;
+                let row = row as i32;
+
+                if rows.get(&row).is_some_and(|rows| rows.contains(&cell))
+                    || cols.get(&col).is_some_and(|cols| cols.contains(&cell))
+                    || squares
+                        .get(&(row / 3, col / 3))
+                        .is_some_and(|squares| squares.contains(&cell))
+                {
+                    return false;
+                }
+
+                cols.entry(col)
+                    .and_modify(|cols| cols.push(cell))
+                    .or_insert(vec![cell]);
+                rows.entry(row)
+                    .and_modify(|rows| rows.push(cell))
+                    .or_insert(vec![cell]);
+                squares
+                    .entry((row / 3, col / 3))
+                    .and_modify(|squares| squares.push(cell))
+                    .or_insert(vec![cell]);
+            }
+        }
+
+        true
     }
 }
 
