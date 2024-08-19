@@ -19,7 +19,32 @@
 struct Solution;
 impl Solution {
     pub fn longest_consecutive(nums: Vec<i32>) -> i32 {
-        todo!()
+        use std::collections::HashSet;
+
+        let nums: HashSet<i32> = nums.into_iter().collect();
+
+        let mut result = 0;
+
+        for n in nums.clone() {
+            let left_neighbor = n.saturating_sub(1);
+
+            if !nums.contains(&left_neighbor) {
+                let right_neighbor = n + 1;
+
+                if !nums.contains(&right_neighbor) {
+                    result = result.max(1);
+                    continue;
+                }
+
+                let mut seq_len = 1;
+                while nums.contains(&(n + seq_len)) {
+                    seq_len += 1;
+                }
+                result = result.max(seq_len);
+            }
+        }
+
+        result
     }
 }
 
